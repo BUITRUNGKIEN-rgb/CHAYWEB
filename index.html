@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2134">
+  <meta name="description" content="SMART CAMPUS AI - AI02. Nguyên mẫu phân loại rác thải bằng trí tuệ nhân tạo, Olympic AI UNETI 2026.">
+  <title>AIX – AI02 | Phân loại rác thông minh</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Thanh điều hướng">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">✳</span>
+      <div><strong>SMART CAMPUS</strong><small>ĐỘI AIX • UNETI12</small></div>
+    </div>
+    <div class="side-section-label">KHÔNG GIAN LÀM VIỆC</div>
+    <button class="side-nav active" data-nav="demo" aria-current="page"><span>▧</span> Phân loại hình ảnh</button>
+    <button class="side-nav" data-nav="about"><span>▤</span> Phương pháp & dữ liệu</button>
+    <button class="side-nav" data-nav="help"><span>◧</span> Hướng dẫn sử dụng</button>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-info"><span class="sidebar-dot"></span><span>Chạy trên GitHub Pages<br><small>Không gửi ảnh lên máy chủ</small></span></div>
+    <div class="sidebar-bottom">OLYMPIC TRÍ TUỆ NHÂN TẠO<br><strong>UNETI 2026</strong></div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><span>OLYMPIC AI UNETI 2026 <span class="crumb">/</span> AI02</span><div class="topbar-tag"><span class="pulse-dot"></span> NGUYÊN MẪU HỌC THUẬT</div></header>
+
+    <section id="view-demo" class="view is-active" aria-label="Trang phân loại ảnh">
+      <div class="hero">
+        <div class="hero-content"><div class="eyebrow">AI02 · TRƯỜNG HỌC XANH <span class="eyebrow-line"></span> SMART CAMPUS AI</div>
+          <h1>Phân loại rác thải<br><span>thông minh bằng AI.</span></h1>
+          <p>Đưa một hình ảnh vào hệ thống để nhận diện vật liệu, xem độ tin cậy tham khảo và nhận gợi ý phân loại phù hợp.</p>
+          <div class="hero-chips"><span>◎ 6 nhóm rác thải</span><span>⟡ Phân tích ngay trên trình duyệt</span><span>⊞ TrashNet</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="ring ring-one"></div><div class="ring ring-two"></div><div class="recycle-orb">♻</div><div class="art-spark art-spark-a">✧</div><div class="art-spark art-spark-b">✴</div></div>
+      </div>
+      <div class="status-line" role="status" aria-live="polite"><span class="status-indicator" id="statusDot"></span><span id="statusText">Đang kiểm tra trạng thái mô hình...</span></div>
+      <div class="workspace">
+        <section class="panel upload-panel" aria-labelledby="uploadHeading">
+          <div class="panel-head"><div class="step-number">01</div><div><h2 id="uploadHeading">Hình ảnh cần phân loại</h2><p>Chọn ảnh chứa một vật thể trên nền tương đối đơn giản</p></div></div>
+          <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Chọn ảnh hoặc kéo thả ảnh vào đây">
+            <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/bmp" hidden>
+            <div class="drop-placeholder" id="dropPlaceholder"><div class="upload-symbol">↑</div><h3>Kéo thả ảnh vào đây</h3><p>hoặc nhấn để chọn ảnh từ máy tính</p><span class="file-hint">JPG, PNG, WEBP, BMP · Tối đa 10 MB</span></div>
+            <img id="imagePreview" class="image-preview" alt="Xem trước hình ảnh rác thải" hidden>
+            <button type="button" id="changeImageBtn" class="change-image" hidden>↻ Đổi ảnh</button>
+          </div>
+          <div class="file-meta" id="fileMeta" aria-live="polite">Chưa có ảnh được chọn.</div>
+          <div class="control-label">Lựa chọn mô hình dự đoán</div>
+          <div class="model-switch" role="group" aria-label="Chọn mô hình"><button class="model-tab active" data-model="improved" aria-pressed="true"><span class="model-tab-icon">✦</span> SVM cải tiến</button><button class="model-tab" data-model="baseline" aria-pressed="false"><span class="model-tab-icon">◇</span> Baseline</button></div>
+          <div class="model-description" id="modelDescription">HOG, màu sắc, kết cấu LBP + SVM; xác suất đã hiệu chỉnh theo mô hình đã huấn luyện.</div>
+          <div id="modelMissing" class="model-missing" hidden><div><strong>Chưa gắn trọng số cho lựa chọn này.</strong><p>Huấn luyện từ TrashNet rồi thêm tệp <code id="neededModelFile">improved.joblib</code> vào thư mục <code>models/</code>. Hoặc nạp tạm mô hình tin cậy từ máy để thử.</p></div><label for="modelUpload" class="mini-button">Nạp mô hình từ máy</label><input type="file" id="modelUpload" accept=".joblib" hidden></div>
+          <button id="analyzeBtn" class="analyze-btn" disabled><span>✧</span> Phân tích hình ảnh <span class="arrow">↗</span></button>
+          <p class="privacy-note">⌁ Ảnh chỉ được xử lý trên thiết bị của bạn; không tải lên máy chủ.</p>
+        </section>
+        <section class="panel result-panel" aria-labelledby="resultHeading"><div class="panel-head"><div class="step-number second">02</div><div><h2 id="resultHeading">Kết quả nhận diện</h2><p>Phân tích AI và đề xuất xử lý rác thải</p></div></div>
+          <div class="result-empty" id="resultEmpty"><div class="empty-icon"><span>⌕</span><span class="empty-spark">✳</span></div><h3>Sẵn sàng phân tích</h3><p>Chọn ảnh, lựa chọn mô hình và nhấn<br>“Phân tích hình ảnh” để xem kết quả.</p></div>
+          <div class="result-loading" id="resultLoading" hidden><span class="loader-ring"></span><h3 id="loadingTitle">Đang khởi tạo bộ xử lý AI...</h3><p id="loadingDetail">Lần đầu cần tải môi trường Python chạy trong trình duyệt. Yêu cầu kết nối Internet.</p></div>
+          <div class="result-error" id="resultError" hidden><div class="error-symbol">!</div><h3>Chưa thể phân tích ảnh</h3><p id="errorMessage"></p></div>
+          <div class="result-data" id="resultData" hidden>
+            <div class="result-topline"><span class="result-status">● HOÀN TẤT PHÂN TÍCH</span><span id="resultModelName">SVM cải tiến</span></div>
+            <div class="prediction-summary"><div class="pred-icon" id="predIcon">♻</div><div><p>NHÓM RÁC DỰ ĐOÁN</p><h3 id="predLabel">—</h3><span id="predEnglish">—</span></div><div class="confidence-bubble"><strong id="confidencePct">—</strong><small>ĐỘ TIN CẬY<br>THAM KHẢO</small></div></div>
+            <div class="result-section-heading">Xác suất tham khảo của 6 nhóm <span>0–100%</span></div><div class="proba-bars" id="probabilityBars"></div>
+            <div class="recommendation"><span class="recommendation-icon">✳</span><div><strong>GỢI Ý PHÂN LOẠI</strong><p id="recommendationText">—</p></div></div>
+            <div class="uncertainty" id="uncertaintyWarning" hidden>⚠ Độ tin cậy thấp hoặc hai nhóm gần tương đương. Nên kiểm tra thủ công trước khi phân loại.</div>
+            <p class="result-disclaimer">Kết quả chỉ mang tính tham khảo. Mô hình được xây dựng từ ảnh TrashNet, không khẳng định có thể áp dụng nguyên trạng tại UNETI.</p>
+          </div>
+        </section>
+      </div>
+      <section class="category-section"><div class="category-title"><div><span class="category-kicker">KHẢ NĂNG NHẬN DIỆN</span><h2>6 nhóm rác thải trong TrashNet</h2></div><p>Mô hình dự đoán một nhãn chính cho mỗi hình ảnh.</p></div><div class="category-grid" id="categoryGrid"></div></section>
+    </section>
+
+    <section id="view-about" class="view info-view" aria-label="Phương pháp và dữ liệu"><div class="page-eyebrow">TÀI LIỆU KỸ THUẬT</div><h1>Cách hệ thống hoạt động</h1><p class="page-intro">Website giữ nguyên bộ trích đặc trưng Python và mô hình scikit-learn của bài thi thông qua Pyodide/WebAssembly. Không có máy chủ dự đoán.</p><div class="info-grid"><article class="info-card"><div class="info-index">01 / DỮ LIỆU</div><h2>TrashNet</h2><p>2.527 hình ảnh, 6 nhóm: cardboard, glass, metal, paper, plastic, trash. Hình ảnh thường chụp từng vật thể trên nền đơn giản.</p></article><article class="info-card"><div class="info-index">02 / BASELINE</div><h2>HOG + RGB + Logistic Regression</h2><p>Ảnh chuẩn hóa về 64 × 64. Đặc trưng hình dạng HOG và phân bố RGB được đưa vào StandardScaler và Logistic Regression.</p></article><article class="info-card"><div class="info-index">03 / CẢI TIẾN</div><h2>HOG + màu + LBP + SVM</h2><p>Bổ sung đặc trưng HSV, màu theo vùng, LBP và moment màu; SVM RBF được hiệu chỉnh xác suất từ tập huấn luyện.</p></article><article class="info-card"><div class="info-index">04 / ĐÁNH GIÁ</div><h2>Macro-F1 & ma trận nhầm lẫn</h2><p>So sánh baseline và mô hình cải tiến trên cùng tập validation. Không suy ra kết quả tốt hơn trước khi có số liệu thực tế.</p></article></div><div class="source-note">Nguồn dữ liệu: <a href="https://github.com/garythung/trashnet" target="_blank" rel="noopener noreferrer">TrashNet của Gary Thung & Mindy Yang</a>. Mọi hướng dẫn phân loại phụ thuộc điều kiện tiếp nhận tại địa phương.</div></section>
+    <section id="view-help" class="view info-view" aria-label="Hướng dẫn sử dụng"><div class="page-eyebrow">HƯỚNG DẪN DEMO</div><h1>Sử dụng website trong 3 bước</h1><div class="help-steps"><article><div class="help-number">01</div><div><h2>Chuẩn bị mô hình đã huấn luyện</h2><p>Dùng bộ dữ liệu TrashNet chạy <code>python -m src.train --images data/dataset-resized</code>. Sau đó sử dụng công cụ <code>export_models_for_web.py</code> đi kèm để sao chép <code>baseline.joblib</code>, <code>improved.joblib</code> vào website.</p></div></article><article><div class="help-number">02</div><div><h2>Tải một ảnh rác</h2><p>Kéo thả hoặc chọn ảnh JPG, PNG, BMP hay WEBP chứa một vật thể. Có thể chọn mô hình Baseline hoặc SVM cải tiến. Ảnh không được tải lên máy chủ.</p></div></article><article><div class="help-number">03</div><div><h2>Nhận kết quả và giải thích</h2><p>Nhấn “Phân tích hình ảnh” và đợi Pyodide nạp môi trường Python lần đầu. Xem loại rác, xác suất 6 nhóm và khuyến nghị; trường hợp xác suất thấp nên kiểm tra bằng mắt.</p></div></article></div><div class="help-warning"><strong>Lưu ý khi trình diễn trực tiếp:</strong> Đường truyền phải hoạt động ở lần khởi chạy đầu để tải Pyodide và thư viện khoa học. Nếu mất mạng, hãy dùng bản demo ngoại tuyến trên máy đã chuẩn bị sẵn.</div></section>
+    <footer><span>© 2026 SMART CAMPUS AI · OLYMPIC AI UNETI</span><span>Thiết kế phục vụ minh họa học thuật · Không phải thiết bị phân loại tự động</span></footer>
+  </main>
+</div>
+<script src="./assets/app.js" defer></script>
+</body>
+</html>

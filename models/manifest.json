@@ -1,0 +1,7 @@
+{
+  "trained": false,
+  "note": "CHƯA CO MO HINH THAT. Chay train tren TrashNet va export_models_for_web.py truoc khi gioi thieu du doan AI.",
+  "models": {"baseline": false, "improved": false},
+  "dataset": null,
+  "macro_f1": null
+}
