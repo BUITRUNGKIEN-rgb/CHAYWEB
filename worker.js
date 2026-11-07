@@ -4,7 +4,24 @@
  */
 'use strict';
 const PYODIDE_VERSION='314.0.7';
-const BASE_URL=`https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+// Two jsDelivr hostnames; some networks may block one of them.
+const PYODIDE_SOURCES=[
+  `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`,
+  `https://fastly.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`
+];
+async function bootPyodide(id){
+  const causes=[];
+  for(const base of PYODIDE_SOURCES){
+    try{
+      notify(id,'Đang kết nối Python',`Thử nguồn: ${new URL(base).hostname}`);
+      importScripts(base+'pyodide.js');
+      return await self.loadPyodide({indexURL:base});
+    }catch(err){
+      causes.push(`${new URL(base).hostname}: ${String(err&&err.message||err).slice(0,140)}`);
+    }
+  }
+  throw Error('Không tải được Pyodide từ hai nguồn CDN. Thử kết nối mạng khác hoặc cho phép CDN. ' + causes.join(' | '));
+}
 let pyodidePromise=null;
 let loadedModels=new Set();
 function notify(id,title,detail){self.postMessage({type:'status',id,title,detail});}
@@ -12,8 +29,7 @@ async function startPython(id){
   if(pyodidePromise) return pyodidePromise;
   pyodidePromise=(async()=>{
     notify(id,'Đang tải môi trường Python...','Nạp WebAssembly từ CDN cho lần chạy đầu tiên.');
-    importScripts(BASE_URL+'pyodide.js');
-    const py=await self.loadPyodide({indexURL:BASE_URL});
+    const py=await bootPyodide(id);
     notify(id,'Đang tải thư viện AI...','Nạp NumPy, SciPy, scikit-learn, scikit-image, Pillow và joblib.');
     await py.loadPackage(['numpy','scipy','scikit-learn','scikit-image','pillow','joblib']);
     notify(id,'Đang đồng bộ tính năng...','Nạp lại chính bộ trích đặc trưng Python của bài thi AI02.');
